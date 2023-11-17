@@ -21,16 +21,16 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim import lr_scheduler
 from tqdm import tqdm
 
-from ...nn.tasks import attempt_load_one_weight, attempt_load_weights
-from ...yolo.cfg import get_cfg
-from ...yolo.data.utils import check_cls_dataset, check_det_dataset
-from ...yolo.utils import (DEFAULT_CFG, LOGGER, ONLINE, RANK, ROOT, SETTINGS, TQDM_BAR_FORMAT, __version__,
+from nn.tasks import attempt_load_one_weight, attempt_load_weights
+from yolo.cfg import get_cfg
+from yolo.data.utils import check_cls_dataset, check_det_dataset
+from yolo.utils import (DEFAULT_CFG, LOGGER, ONLINE, RANK, ROOT, SETTINGS, TQDM_BAR_FORMAT, __version__,
                                     callbacks, clean_url, colorstr, emojis, yaml_save)
-from ...yolo.utils.autobatch import check_train_batch_size
-from ...yolo.utils.checks import check_file, check_imgsz, print_args
-from ...yolo.utils.dist import ddp_cleanup, generate_ddp_command
-from ...yolo.utils.files import get_latest_run, increment_path
-from ...yolo.utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, init_seeds, one_cycle,
+from yolo.utils.autobatch import check_train_batch_size
+from yolo.utils.checks import check_file, check_imgsz, print_args
+from yolo.utils.dist import ddp_cleanup, generate_ddp_command
+from yolo.utils.files import get_latest_run, increment_path
+from yolo.utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, init_seeds, one_cycle,
                                                 select_device, strip_optimizer)
 
 
@@ -259,7 +259,8 @@ class BaseTrainer:
             metric_keys = self.validator.metrics.keys + self.label_loss_items(prefix='val')
             self.metrics = dict(zip(metric_keys, [0] * len(metric_keys)))  # TODO: init metrics for plot_results()?
             self.ema = ModelEMA(self.model)
-            if self.args.plots and not self.args.v5loader:
+            if self.args.plots:
+            #if self.args.plots and not self.args.v5loader:
                 self.plot_training_labels()
         self.resume_training(ckpt)
         self.scheduler.last_epoch = self.start_epoch - 1  # do not move

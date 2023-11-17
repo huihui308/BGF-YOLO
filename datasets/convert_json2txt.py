@@ -4,13 +4,15 @@ import glob
 import xml.etree.ElementTree as ET
 import numpy as np
 import sys
-sys.path.append("/root/huanggua/ultralytics-main")
-from ...datasets.data_config import get_train_data
+sys.path.append("/home/david/code/yolo/BGF-YOLO")
+#sys.path.append("/root/huanggua/ultralytics-main")
+#from ...datasets.data_config import get_train_data
+from datasets.data_config import get_train_data
 from PIL import  Image
 
 # TRAIN, VAL or TEST folder
-origin_img_folder = "TRAIN"
-origin_label_folder = "TRAIN"
+origin_img_folder = ""
+origin_label_folder = ""
 classes = ["Brain tumor"]
 
 def convert(size, box):
@@ -65,7 +67,7 @@ import json
 
 if __name__ == "__main__":
     current = 0
-    with open(os.path.join(get_train_data(),origin_img_folder,"annotations_val.json")) as file:
+    with open(os.path.join(get_train_data(),origin_img_folder,"annotations_train.json")) as file:
         data = json.load(file)
 
     for file in data.items():

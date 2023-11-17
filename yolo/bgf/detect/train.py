@@ -3,15 +3,18 @@ from copy import copy
 
 import numpy as np
 import sys
-sys.path.append("/root/ultralytics-modify_biformer_gfpn_4head")
-from ...nn.tasks import DetectionModel
-from ...yolo import bgf
-from ...yolo.data import build_dataloader, build_yolo_dataset
-from ...yolo.data.dataloaders.v5loader import create_dataloader
-from ...yolo.engine.trainer import BaseTrainer
-from ...yolo.utils import DEFAULT_CFG, LOGGER, RANK, colorstr
-from ...yolo.utils.plotting import plot_images, plot_labels, plot_results
-from ...yolo.utils.torch_utils import de_parallel, torch_distributed_zero_first
+sys.path.append("/home/david/code/yolo/BGF-YOLO")
+#sys.path.append("/root/ultralytics-modify_biformer_gfpn_4head")
+from nn.tasks import DetectionModel
+from yolo import bgf
+from yolo.data import build_dataloader, build_yolo_dataset
+from yolo.data.dataloaders.v5loader import create_dataloader
+from yolo.engine.trainer import BaseTrainer
+from yolo.utils import DEFAULT_CFG, LOGGER, RANK, colorstr
+from yolo.utils.plotting import plot_images, plot_labels, plot_results
+from yolo.utils.torch_utils import de_parallel, torch_distributed_zero_first
+from ultralytics.models.yolo.detect import DetectionValidator
+
 
 
 # BaseTrainer python usage
@@ -31,6 +34,7 @@ class DetectionTrainer(BaseTrainer):
     def get_dataloader(self, dataset_path, batch_size=16, rank=0, mode='train'):
         """TODO: manage splits differently."""
         # Calculate stride - check if model is initialized
+        """
         if self.args.v5loader:
             LOGGER.warning("WARNING ⚠️ 'v5loader' feature is deprecated and will be removed soon. You can train using "
                            'the default YOLOv8 dataloader instead, no argument is needed.')
@@ -50,6 +54,7 @@ class DetectionTrainer(BaseTrainer):
                                      prefix=colorstr(f'{mode}: '),
                                      shuffle=mode == 'train',
                                      seed=self.args.seed)[0]
+        """
         assert mode in ['train', 'val']
         with torch_distributed_zero_first(rank):  # init dataset *.cache only once if DDP
             dataset = self.build_dataset(dataset_path, mode, batch_size)
@@ -85,7 +90,7 @@ class DetectionTrainer(BaseTrainer):
     def get_validator(self):
         """Returns a DetectionValidator for YOLO model validation."""
         self.loss_names = 'box_loss', 'cls_loss', 'dfl_loss'
-        return v8.detect.DetectionValidator(self.test_loader, save_dir=self.save_dir, args=copy(self.args))
+        return DetectionValidator(self.test_loader, save_dir=self.save_dir, args=copy(self.args))
 
     def label_loss_items(self, loss_items=None, prefix='train'):
         """

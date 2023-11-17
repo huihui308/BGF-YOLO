@@ -1,6 +1,6 @@
-train: D://Br35H/TRAIN/
-val: D://Br35H/VAL/
-test: D://Br35H/TEST/
+train: /home/david/dataset/detect/Br35H-Mask-RCNN/TRAIN/
+val: /home/david/dataset/detect/Br35H-Mask-RCNN/VAL/
+test: /home/david/dataset/detect/Br35H-Mask-RCNN/TEST/
 
 nc: 1
 names: ['Brain tumor']

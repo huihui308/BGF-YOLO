@@ -12,7 +12,7 @@ from PIL import Image, ImageDraw, ImageFont
 from PIL import __version__ as pil_version
 from scipy.ndimage.filters import gaussian_filter1d
 
-from ...yolo.utils import LOGGER, TryExcept, plt_settings, threaded
+from yolo.utils import LOGGER, TryExcept, plt_settings, threaded
 
 from .checks import check_font, check_version, is_ascii
 from .files import increment_path
