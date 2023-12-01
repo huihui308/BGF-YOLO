@@ -1,0 +1,11 @@
+train: /home/david/dataset/detect/yolov8/echo_park5/train
+val: /home/david/dataset/detect/yolov8/echo_park5/val
+#test: /home/david/dataset/detect/Br35H-Mask-RCNN/TEST/
+
+nc: 5
+names:
+  0: person
+  1: rider
+  2: tricycle
+  3: car
+  4: lg
