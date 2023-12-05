@@ -57,6 +57,8 @@ from copy import deepcopy
 from pathlib import Path
 
 import torch
+import sys
+sys.path.append("/home/david/code/yolo/BGF-YOLO")
 
 from nn.autobackend import check_class_names
 from nn.modules import C2f, Detect, Segment

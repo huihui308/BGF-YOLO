@@ -3,5 +3,6 @@ runs
 *.pt
 __pycache__
 
-
+*.onnx
+*.engine
 
