@@ -3,7 +3,7 @@ from copy import copy
 
 import numpy as np
 import sys
-sys.path.append("/home/david/code/yolo/BGF-YOLO")
+sys.path.insert(1, "/home/david/code/yolo/BGF-YOLO")
 #sys.path.append("/root/ultralytics-modify_biformer_gfpn_4head")
 from nn.tasks import DetectionModel
 from yolo import bgf

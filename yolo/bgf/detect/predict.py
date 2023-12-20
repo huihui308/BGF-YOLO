@@ -2,7 +2,7 @@
 
 import torch
 import sys
-sys.path.append("/home/david/code/yolo/BGF-YOLO")
+sys.path.insert(1, "/home/david/code/yolo/BGF-YOLO")
 
 from yolo.engine.predictor import BasePredictor
 from yolo.engine.results import Results
